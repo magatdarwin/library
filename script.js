@@ -3,7 +3,7 @@ let myLibrary = [];
 function Book(title, author, pages, readStatus) {
   this.title = title;
   this.author = author;
-  this.apges = pages;
+  this.pages = pages;
   this.readStatus = readStatus;
 }
 
