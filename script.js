@@ -7,8 +7,19 @@ function Book(title, author, pages, readStatus) {
   this.readStatus = readStatus;
 }
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
+function addBookToLibrary(event) {
+  event.preventDefault();
+  title = document.querySelector('#title').value;
+  author = document.querySelector('#author').value;
+  pages = document.querySelector('#pages').value;
+  readStatus = document.querySelector('#status').value;
+
+  const newBook = new Book(title, author, pages, readStatus);
+  myLibrary.push(newBook);
+  
+  const newBookForm = document.querySelector('#book-form');
+  newBookForm.reset();
+  bookFormModal.style.display = 'none';
 }
 
 function showBookFormModal() {
@@ -29,3 +40,6 @@ const cancelButton = document.querySelector('input[value="Cancel"]');
 addBook.addEventListener('click', showBookFormModal);
 cancelButton.addEventListener('click', hideBookFormModal);
 window.addEventListener('click', hideBookFormModal);
+
+const submitForm = document.querySelector('#book-form input[type=submit]');
+submitForm.addEventListener('click', addBookToLibrary);
