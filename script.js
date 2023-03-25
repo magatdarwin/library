@@ -9,10 +9,10 @@ function Book(title, author, pages, readStatus) {
 
 function addBookToLibrary(event) {
   event.preventDefault();
-  title = document.querySelector('#title').value;
-  author = document.querySelector('#author').value;
-  pages = document.querySelector('#pages').value;
-  readStatus = document.querySelector('#status').value;
+  let title = document.querySelector('#title').value;
+  let author = document.querySelector('#author').value;
+  let pages = document.querySelector('#pages').value;
+  let readStatus = document.querySelector('#status').checked ? 'Finished' : 'Unfinished';
 
   const newBook = new Book(title, author, pages, readStatus);
   myLibrary.push(newBook);
@@ -34,9 +34,10 @@ function hideBookFormModal(event) {
   }
 }
 
-function addBookCard(book) {
+function addBookCard(book, index) {
   const mainBlock = document.querySelector('.main');
   const newCard = document.createElement('div');
+  newCard.dataset.index = index;
   newCard.classList.add('card');
 
   const title = document.createElement('p');
@@ -45,13 +46,24 @@ function addBookCard(book) {
   author.innerText = `Author: ${book['author']}`;
   const pages = document.createElement('p');
   pages.innerText = `Pages: ${book['pages']}`;
-  const status = document.createElement('p');
-  status.innerText = `Status: ${book['readStatus']}`;
+
+  const bookControls = document.createElement('div');
+  bookControls.classList.add('book-controls');
+
+  const readStatusButton = document.createElement('button');
+  readStatusButton.classList.add('read-status');
+  readStatusButton.innerText = book['readStatus'];
+  bookControls.appendChild(readStatusButton);
+
+  const removeBookButton = document.createElement('button');
+  removeBookButton.classList.add('remove-book');
+  removeBookButton.innerText = 'Remove';
+  bookControls.appendChild(removeBookButton);
 
   newCard.appendChild(title);
   newCard.appendChild(author);
   newCard.appendChild(pages);
-  newCard.appendChild(status);
+  newCard.appendChild(bookControls);
   mainBlock.appendChild(newCard);
 }
 
@@ -62,8 +74,8 @@ function updateLibraryView() {
     card.remove();
   }
 
-  for (let book of myLibrary) {
-    addBookCard(book);
+  for (let i = 0; i < myLibrary.length; i++) {
+    addBookCard(myLibrary[i], i);
   }
 }
 
@@ -78,4 +90,4 @@ window.addEventListener('click', hideBookFormModal);
 const submitForm = document.querySelector('#book-form input[type=submit]');
 submitForm.addEventListener('click', addBookToLibrary);
 
-updateLibraryView();
+// updateLibraryView();

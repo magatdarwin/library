@@ -16,13 +16,15 @@
   </header>
 
   <main class="main">
-    <!-- <div class="card">
+    <div class="card" data-index="0">
       <p>Title: <span></span></p>
       <p>Author: <span></span></p>
       <p>Pages: <span></span></p>
-      <p>Status<span></span></p>
+      <div class="book-controls">
+        <button class="read-status">Finished</button>
+        <button class="remove-book">Remove</button>  
+      </div>
     </div>
-     -->
 
     <button class="add"><i class="material-icons" id="add-button">library_add</i></button>
   </main>
@@ -42,8 +44,8 @@
         <input type="number" id="pages" placeholder="Pages">
       </div>
       <div class="input-group">
-        <label for="status">Status</label>
-        <input type="text" id="status" placeholder="Status">
+        <label for="status">Finished Reading?</label>
+        <input type="checkbox" value="finished" id="status">
       </div>
       <div>
         <input type="submit" value="Add to Library">

@@ -39,7 +39,25 @@ body {
   border-radius: 20px;
   padding: 40px;
   display: grid;
-  justify-items: center;
+  justify-items: start;
+  align-items: center;
+  grid-template-rows: repeat(4, auto);
+}
+
+.card .book-controls {
+  justify-self: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.card p {
+  margin: 0;  
+}
+
+.card button {
+  justify-self: center;
+  height: 30px;
 }
 
 .add {
