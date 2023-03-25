@@ -21,7 +21,7 @@ function addBookToLibrary(event) {
   newBookForm.reset();
   bookFormModal.style.display = 'none';
 
-  addBookCard(newBook);
+  updateLibraryView();
 }
 
 function showBookFormModal() {
@@ -55,7 +55,13 @@ function addBookCard(book) {
   mainBlock.appendChild(newCard);
 }
 
-function initializeLibraryView() {  
+function updateLibraryView() {
+  let bookCards = document.querySelectorAll('.main > .card');
+  
+  for (let card of bookCards) {
+    card.remove();
+  }
+
   for (let book of myLibrary) {
     addBookCard(book);
   }
@@ -72,4 +78,4 @@ window.addEventListener('click', hideBookFormModal);
 const submitForm = document.querySelector('#book-form input[type=submit]');
 submitForm.addEventListener('click', addBookToLibrary);
 
-initializeLibraryView();
+updateLibraryView();
