@@ -53,8 +53,6 @@ function addBookCard(book) {
   newCard.appendChild(pages);
   newCard.appendChild(status);
   mainBlock.appendChild(newCard);
-
-  console.log(myLibrary);
 }
 
 function initializeLibraryView() {  
