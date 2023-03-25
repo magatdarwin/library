@@ -1,5 +1,7 @@
 let myLibrary = [];
 
+myLibrary[0] = new Book('Dune', 'Frank Herbert', 500, 'Unfinished')
+
 function Book(title, author, pages, readStatus) {
   this.title = title;
   this.author = author;
@@ -67,6 +69,13 @@ function addBookCard(book, index) {
   mainBlock.appendChild(newCard);
 }
 
+function toggleReadStatus(event) {
+  console.log(event.target.parentElement.parentElement.dataset.index);  
+  let bookIndex = event.target.parentElement.parentElement.dataset.index;
+  myLibrary[bookIndex].readStatus = myLibrary[bookIndex].readStatus === 'Finished' ? 'Unfinished' : 'Finished';
+  event.target.innerText = myLibrary[bookIndex].readStatus;
+}
+
 function updateLibraryView() {
   let bookCards = document.querySelectorAll('.main > .card');
   
@@ -77,6 +86,10 @@ function updateLibraryView() {
   for (let i = 0; i < myLibrary.length; i++) {
     addBookCard(myLibrary[i], i);
   }
+
+  document.querySelectorAll('.read-status').forEach(readStatusButton => {
+    readStatusButton.addEventListener('click', toggleReadStatus);
+  });
 }
 
 const bookFormModal = document.querySelector('#book-form-modal');
@@ -90,4 +103,4 @@ window.addEventListener('click', hideBookFormModal);
 const submitForm = document.querySelector('#book-form input[type=submit]');
 submitForm.addEventListener('click', addBookToLibrary);
 
-// updateLibraryView();
+updateLibraryView();
