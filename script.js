@@ -70,10 +70,15 @@ function addBookCard(book, index) {
 }
 
 function toggleReadStatus(event) {
-  console.log(event.target.parentElement.parentElement.dataset.index);  
   let bookIndex = event.target.parentElement.parentElement.dataset.index;
   myLibrary[bookIndex].readStatus = myLibrary[bookIndex].readStatus === 'Finished' ? 'Unfinished' : 'Finished';
   event.target.innerText = myLibrary[bookIndex].readStatus;
+}
+
+function removeBook(event) {
+  let bookIndex = event.target.parentElement.parentElement.dataset.index;
+  myLibrary.splice(bookIndex, 1);
+  updateLibraryView();
 }
 
 function updateLibraryView() {
@@ -89,6 +94,10 @@ function updateLibraryView() {
 
   document.querySelectorAll('.read-status').forEach(readStatusButton => {
     readStatusButton.addEventListener('click', toggleReadStatus);
+  });
+
+  document.querySelectorAll('.remove-book').forEach(readStatusButton => {
+    readStatusButton.addEventListener('click', removeBook);
   });
 }
 
