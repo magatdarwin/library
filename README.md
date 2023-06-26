@@ -7,3 +7,4 @@ Skills Demonstrated
 - CSS Flex & Grid
 - DOM Manipulation
 - JavaScript Objects and Constructors
+- Basic Form Validations
