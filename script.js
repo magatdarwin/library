@@ -8,9 +8,7 @@ function Book(title, author, pages, readStatus) {
   this.pages = pages;
   this.readStatus = readStatus;
 }
-
-function addBookToLibrary(event) {
-  event.preventDefault();
+function addBookToLibrary() {
   let title = document.querySelector('#title').value;
   let author = document.querySelector('#author').value;
   let pages = document.querySelector('#pages').value;
@@ -32,7 +30,13 @@ function showBookFormModal() {
 
 function hideBookFormModal(event) {
   if (event.target === bookFormModal || event.target === cancelButton) {
-    bookFormModal.style.display = 'none';  
+    bookFormModal.style.display = 'none';
+    bookForm.reset();
+    const errorMessages = document.querySelectorAll('.error');
+    errorMessages.forEach(errorMessage => {
+      errorMessage.innerText = '';
+      errorMessage.classList.remove('visible');
+    });
   }
 }
 
@@ -101,6 +105,61 @@ function updateLibraryView() {
   });
 }
 
+function validateInput(event) {
+  const inputGroup = event.target.parentElement;
+  const formInput = inputGroup.querySelector('input');
+  const inputError = inputGroup.querySelector('input + .error');
+
+  if (formInput.validity.valid) {
+    inputError.innerText = '';
+    inputError.classList.remove('visible');
+  }
+  else {
+    showError(formInput, inputError);
+  }
+}
+
+function validateForm(event) {
+  event.preventDefault();
+  let validForm = true;
+
+  let inputGroup;
+  let formInput;
+  let inputError;
+
+  let inputGroups = document.querySelectorAll('.input-group');
+  for (inputGroup of inputGroups) {
+    formInput = inputGroup.querySelector('input');
+    inputError = inputGroup.querySelector('input + .error');
+
+    if (!formInput.validity.valid) {
+      showError(formInput, inputError);
+      validForm = false;
+    }
+  }
+
+  if (validForm) {
+    addBookToLibrary();
+  }
+}
+
+function showError(formInput, inputError) {
+  const field = formInput.id;
+
+  if (formInput.validity.valueMissing) {
+    inputError.innerText = 'Field cannot be empty';
+  }
+
+  switch (field) {
+    case 'pages':
+      if (formInput.validity.badInput) {
+        inputError.innerText = 'Please enter a numeric value';
+      }
+  }
+
+  inputError.classList.add('visible');
+}
+
 const bookFormModal = document.querySelector('#book-form-modal');
 const addBook = document.querySelector('button.add');
 const cancelButton = document.querySelector('input[value="Cancel"]');
@@ -109,7 +168,12 @@ addBook.addEventListener('click', showBookFormModal);
 cancelButton.addEventListener('click', hideBookFormModal);
 window.addEventListener('click', hideBookFormModal);
 
-const submitForm = document.querySelector('#book-form input[type=submit]');
-submitForm.addEventListener('click', addBookToLibrary);
+const formInputs = document.querySelectorAll('.input-group input');
+formInputs.forEach(formInput => {
+  formInput.addEventListener('input', validateInput);
+});
+
+const bookForm = document.querySelector('#book-form');
+bookForm.addEventListener('submit', validateForm);
 
 updateLibraryView();

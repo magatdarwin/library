@@ -101,3 +101,26 @@ body {
   gap: 10px;
   width: 250px;
 }
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  width: 100%;
+  padding: 0;
+
+  font-size: 80%;
+  color: white;
+  background-color: #900;
+  border-radius: 0 0 5px 5px;
+
+  box-sizing: border-box;
+  display: none;
+}
+
+.error.visible {
+  padding: 0.3em;
+  display: block;
+}
